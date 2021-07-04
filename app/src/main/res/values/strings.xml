@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Indo Train Ticket</string>
+    <string name="button_not_register">Belum memiliki akun? <font color='#FF9800'>Daftar Sekarang !</font></string>
+    <string name="after_register">Sudah memiliki akun? <font color='#FF9800'>Login Sekarang !</font></string>
+    <string name="batal">Batal</string>
+    <string name="keluar">Keluar</string>
+</resources>
