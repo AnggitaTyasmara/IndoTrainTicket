@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+//Membuat deklarasi database, tabel, dan juga kolom
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "db_train";
@@ -27,11 +27,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_HARGA_TOTAL = "harga_total";
 
     private SQLiteDatabase db;
-
+//Membuat database db_train
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
-
+//Membuat tabel user, tabeh harga, tabel booking, dan memasukkan data ke dalam tabel user
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -53,11 +53,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         onCreate(db);
     }
-
+    //membuat methode untuk open database
     public void open() throws SQLException {
         db = this.getWritableDatabase();
     }
-
+    //untuk memasukkan data yang telah diisikan pada form register
     public boolean Register(String username, String password, String name) throws SQLException {
 
         @SuppressLint("Recycle") Cursor mCursor = db.rawQuery("INSERT INTO " + TABLE_USER + "(" + COL_USERNAME + ", " + COL_PASSWORD + ", " + COL_NAME + ") VALUES (?,?,?)", new String[]{username, password, name});
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-
+    //untuk mengambil data pada database yaitu tabel user yang isinya email dan password
     public boolean Login(String username, String password) throws SQLException {
         @SuppressLint("Recycle") Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_USER + " WHERE " + COL_USERNAME + "=? AND " + COL_PASSWORD + "=?", new String[]{username, password});
         if (mCursor != null) {

@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class BookKeretaActivity extends AppCompatActivity {
-
+//deklarasi semua komponen yang diperlukan pada activity_book_kereta
     protected Cursor cursor;
     DatabaseHelper dbHelper;
     SQLiteDatabase db;
@@ -43,41 +43,41 @@ public class BookKeretaActivity extends AppCompatActivity {
     private EditText etTanggal;
     private DatePickerDialog dpTanggal;
     Calendar newCalendar = Calendar.getInstance();
-
+    //membuat oncreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_kereta);
-
+        //memanggil database helper
         dbHelper = new DatabaseHelper(BookKeretaActivity.this);
         db = dbHelper.getReadableDatabase();
-
+        //membuat deklarasi untuk asal, tujuan, dewasa, dan anak
         final String[] asal = {"Jakarta", "Yogyakarta", "Surabaya"};
         final String[] tujuan = {"Jakarta", "Yogyakarta", "Surabaya"};
         final String[] dewasa = {"0", "1", "2", "3", "4", "5"};
         final String[] anak = {"0", "1", "2", "3", "4", "5"};
-
+        //memanggil id yang sudah dibuat pada activity_book_kereta
         spinAsal = findViewById(R.id.asal);
         spinTujuan = findViewById(R.id.tujuan);
         spinDewasa = findViewById(R.id.dewasa);
         spinAnak = findViewById(R.id.anak);
-
+        //membuat adapter untuk asal
         ArrayAdapter<CharSequence> adapterAsal = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, asal);
         adapterAsal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinAsal.setAdapter(adapterAsal);
-
+        //membuat adapter untuk tujuan
         ArrayAdapter<CharSequence> adapterTujuan = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, tujuan);
         adapterTujuan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinTujuan.setAdapter(adapterTujuan);
-
+        //membuat adapter untuk dewasa
         ArrayAdapter<CharSequence> adapterDewasa = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, dewasa);
         adapterDewasa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinDewasa.setAdapter(adapterDewasa);
-
+        //membuat adapter untuk anak
         ArrayAdapter<CharSequence> adapterAnak = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, anak);
         adapterAnak.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinAnak.setAdapter(adapterAnak);
-
+        //membuat opsi pilihan kota asal
         spinAsal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,7 +89,7 @@ public class BookKeretaActivity extends AppCompatActivity {
 
             }
         });
-
+        //membuat opsi pilihan kota tujuan
         spinTujuan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -101,7 +101,7 @@ public class BookKeretaActivity extends AppCompatActivity {
 
             }
         });
-
+        //membuat opsi pilihan jumlah dewasa
         spinDewasa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +113,7 @@ public class BookKeretaActivity extends AppCompatActivity {
 
             }
         });
-
+        //membuat opsi pilihan jumlah anak
         spinAnak.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -147,10 +147,13 @@ public class BookKeretaActivity extends AppCompatActivity {
                         Toast.makeText(BookKeretaActivity.this, "Asal dan Tujuan tidak boleh sama !", Toast.LENGTH_LONG).show();
                     } else {
                         AlertDialog dialog = new AlertDialog.Builder(BookKeretaActivity.this)
+                                //memunculkan message Ingin booking kereta sekarang?
                                 .setTitle("Ingin booking kereta sekarang?")
+                                //membuat positive button Ya
                                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        //data yang dimasukkan akan masuk ke tabel book
                                         try {
                                             db.execSQL("INSERT INTO TB_BOOK (asal, tujuan, tanggal, dewasa, anak) VALUES ('" +
                                                     sAsal + "','" +
@@ -164,12 +167,14 @@ public class BookKeretaActivity extends AppCompatActivity {
                                                 cursor.moveToPosition(0);
                                                 id_book = cursor.getInt(0);
                                             }
+                                            //data yang dimasukkan akan masuk ke tabel harga.
                                             db.execSQL("INSERT INTO TB_HARGA (username, id_book, harga_dewasa, harga_anak, harga_total) VALUES ('" +
                                                     email + "','" +
                                                     id_book + "','" +
                                                     hargaTotalDewasa + "','" +
                                                     hargaTotalAnak + "','" +
                                                     hargaTotal + "');");
+                                            //jika tombol ya di tekan akan memunculkan toast booking berhasil
                                             Toast.makeText(BookKeretaActivity.this, "Booking berhasil", Toast.LENGTH_LONG).show();
                                             finish();
                                         } catch (Exception e) {
@@ -177,11 +182,13 @@ public class BookKeretaActivity extends AppCompatActivity {
                                         }
                                     }
                                 })
+                                //membuat negative button Tidak
                                 .setNegativeButton("Tidak", null)
                                 .create();
                         dialog.show();
                     }
                 } else {
+                    //memunculkan toast jika data belung dilengkapi
                     Toast.makeText(BookKeretaActivity.this, "Mohon lengkapi data pemesanan!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -190,14 +197,14 @@ public class BookKeretaActivity extends AppCompatActivity {
         setupToolbar();
 
     }
-
+    //membuat setup dan memberi judul pada header/panel
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.tbKrl);
         toolbar.setTitle("Form Booking");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    //untuk menampilkan tombol tindakan back pada panel
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -206,7 +213,7 @@ public class BookKeretaActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    //membuat method untuk menghitung harga berdasarkan asal, tujuan, dewasa, dan anak
     public void perhitunganHarga() {
         if(sAsal.equalsIgnoreCase("jakarta") && sTujuan.equalsIgnoreCase("surabaya")) {
             hargaDewasa = 200000;
@@ -235,8 +242,9 @@ public class BookKeretaActivity extends AppCompatActivity {
         hargaTotalAnak = jmlAnak * hargaAnak;
         hargaTotal = hargaTotalDewasa + hargaTotalAnak;
     }
-
+    //membuat waktu pemesanan
     private void setDateTimeField() {
+        //membuat tombol on click supaya bisa menampilkan tanggal
         etTanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,7 +253,7 @@ public class BookKeretaActivity extends AppCompatActivity {
         });
 
         dpTanggal = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
+            //mengatur tanggal sesuai dengan waktu saat ini
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
@@ -255,7 +263,7 @@ public class BookKeretaActivity extends AppCompatActivity {
                 etTanggal.setText(sTanggal);
 
             }
-
+         //menampilkan tanggal yang sudah dipilih
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 }

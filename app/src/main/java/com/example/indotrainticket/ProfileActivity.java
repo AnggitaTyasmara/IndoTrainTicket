@@ -16,7 +16,7 @@ import com.example.indotrainticket.session.SessionManager;
 import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
-
+//deklarasi semua komponen yang diperlukan pada activity profile
     protected Cursor cursor;
     DatabaseHelper dbHelper;
     SQLiteDatabase db;
@@ -27,15 +27,16 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        //memanggil database haelper
         dbHelper = new DatabaseHelper(this);
-
+        //membuat session
         session = new SessionManager(getApplicationContext());
-
+        //mengambil detail data user
         HashMap<String, String> user = session.getUserDetails();
         email = user.get(SessionManager.KEY_EMAIL);
 
         db = dbHelper.getReadableDatabase();
+        //detail data yang diambil adalah email dari TB_USER
         cursor = db.rawQuery("SELECT * FROM TB_USER WHERE username = '" + email + "'", null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
@@ -52,14 +53,14 @@ public class ProfileActivity extends AppCompatActivity {
         setupToolbar();
 
     }
-
+    //membuat setup dan memberi judul pada header/panel
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.tbProfile);
         toolbar.setTitle("Identitas Pemesan");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    //untuk menampilkan tombol tindakan back pada panel
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

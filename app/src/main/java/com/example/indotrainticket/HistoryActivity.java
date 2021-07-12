@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HistoryActivity extends AppCompatActivity {
-
+//deklarasi seluruh komponen yang digunakan pada atcivity history
     protected Cursor cursor;
     DatabaseHelper dbHelper;
     SQLiteDatabase db;
@@ -52,14 +52,14 @@ public class HistoryActivity extends AppCompatActivity {
         refreshList();
         setupToolbar();
     }
-
+    //membuat setup pada panel/header aplikasi
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.tbHistory);
         toolbar.setTitle("Riwayat Booking");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    //untuk menampilkan tombol tindakan back pada panel
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -68,7 +68,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    //sourcode untuk menampilkan data booking tiket yang sudah di pesan dengan memanggilnya dari database dan menampilkannya pada activity history
     public void refreshList() {
         final ArrayList<HistoryModel> hasil = new ArrayList<>();
         cursor = db.rawQuery("SELECT * FROM TB_BOOK, TB_HARGA WHERE TB_BOOK.id_book = TB_HARGA.id_book AND username='" + email + "'", null);

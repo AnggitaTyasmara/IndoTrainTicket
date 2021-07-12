@@ -27,14 +27,14 @@ public class SessionManager {
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
-
+//membuat method untuk login session
     public void createLoginSession(String email) {
 
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(KEY_EMAIL, email);
         editor.commit();
     }
-
+//membuat method untuk validasi login
     public void checkLogin() {
 
         if (!this.isLoggedIn()) {
@@ -45,7 +45,7 @@ public class SessionManager {
         }
 
     }
-
+//membuat method untuk mengambil detail data dari user
     public HashMap<String, String> getUserDetails() {
 
         HashMap<String, String> user = new HashMap<>();
@@ -53,7 +53,7 @@ public class SessionManager {
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
         return user;
     }
-
+//membuat method untuk logout user
     public void logoutUser() {
 
         editor.clear();

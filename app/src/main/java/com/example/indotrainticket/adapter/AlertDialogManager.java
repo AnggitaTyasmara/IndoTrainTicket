@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.example.indotrainticket.R;
-
+//membuat alertdialogmanager untuk jendela kecil yang meminta pengguna untuk membuat keputusan atau memasukkan informasi tambahan.
 public class AlertDialogManager {
 
     public void showAlertDialog(Context context, String title, String message, Boolean status) {

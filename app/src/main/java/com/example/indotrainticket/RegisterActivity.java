@@ -18,7 +18,7 @@ import com.example.indotrainticket.R;
 import com.example.indotrainticket.database.DatabaseHelper;
 
 public class RegisterActivity extends AppCompatActivity {
-
+//deklarasi semua komponen yang diperlukan untuk halaman register
     EditText txtName, txtUsername, txtPassword;
     Button btnDaftar, btnKeLogin;
     DatabaseHelper dbHelper;
@@ -36,20 +36,21 @@ public class RegisterActivity extends AppCompatActivity {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-
+        //memanggil database helper
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
-
+        //memanggil id yang sudah dibuat pada halaman register
         txtName = findViewById(R.id.reg_nama);
         txtUsername = findViewById(R.id.reg_email);
         txtPassword = findViewById(R.id.reg_password);
 
         btnDaftar = findViewById(R.id.daftar);
         btnKeLogin = findViewById(R.id.ke_login);
-
+        //membuat aksi on click pada tombol daftar
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //untuk menginputkan data register
                 name = txtName.getText().toString();
                 username = txtUsername.getText().toString();
                 password = txtPassword.getText().toString();
@@ -57,9 +58,11 @@ public class RegisterActivity extends AppCompatActivity {
                     if (username.trim().length() > 0 && password.trim().length() > 0 && name.trim().length() > 0) {
                         dbHelper.open();
                         dbHelper.Register(username, password, name);
+                        //jika tombol diklik akan muncul toast daftar berhasil dan langsung menuju ke halaman login
                         Toast.makeText(RegisterActivity.this, "Daftar berhasil", Toast.LENGTH_LONG).show();
                         finish();
                     } else {
+                        //jika tombol diklik akan muncul toast daftar gagal, lengkapi form!
                         Toast.makeText(RegisterActivity.this, "Daftar gagal, lengkapi form!", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
@@ -67,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //membuat aksi onclick pada tombol login sekarang, jika tombol di klik akan menuju ke halaman login
         btnKeLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
+    //set window flag
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
         Window win = activity.getWindow();

@@ -1,7 +1,7 @@
 package com.example.indotrainticket.model;
 
 public class HistoryModel {
-
+//mendeklarasikan idbook, mtanggal, mriwayat, mtotal, dan mResourceid
     private String mIdBook;
     private String mTanggal;
     private String mRiwayat;
@@ -16,23 +16,23 @@ public class HistoryModel {
         mTotal = total;
         mImageResourceId = imageResourceId;
     }
-
+    //memanggil id book
     public String getIdBook() {
         return mIdBook;
     }
-
+    //memanggil tanggal
     public String getTanggal() {
         return mTanggal;
     }
-
+    //memanggil riwayat
     public String getRiwayat() {
         return mRiwayat;
     }
-
+    //memanggil total
     public String getTotal() {
         return mTotal;
     }
-
+    //memanggil image id
     public int getImageResourceId() {
         return mImageResourceId;
     }

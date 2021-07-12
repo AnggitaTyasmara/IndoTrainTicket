@@ -23,7 +23,7 @@ import com.example.indotrainticket.database.DatabaseHelper;
 import com.example.indotrainticket.session.SessionManager;
 
 public class LoginActivity extends AppCompatActivity {
-
+//Deklarasi semua komponen yang di perlukan untuk halaman login
     EditText txtUsername, txtPassword;
     Button btnLogin, btnRegister;
     AlertDialogManager alert = new AlertDialogManager();
@@ -42,12 +42,12 @@ public class LoginActivity extends AppCompatActivity {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-
+//Memanggil database helper
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
-
+//membuat session untuk login
         session = new SessionManager(getApplicationContext());
-
+//memanggil id yang sudah dibuat di activity_login
         txtUsername = findViewById(R.id.email);
         txtPassword = findViewById(R.id.password);
 
@@ -70,11 +70,11 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (dbHelper.Login(username, password)) {
                             session.createLoginSession(username);
-
+                            //jika login berhasil akan menuju ke main activity
                             finish();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
-
+                            //Jika login gagal ada 2 message yang akan di tampilkan
                         } else {
                             alert.showAlertDialog(LoginActivity.this, "Login gagal..", "Email atau Password salah!", false);
 
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //tombol untuk menuju ke halaman register
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    //set window flag
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
 
         Window win = activity.getWindow();
@@ -108,18 +108,20 @@ public class LoginActivity extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
-
+    //membuat methode untuk keluar aplikasi
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setMessage("Apakah Anda ingin keluar dari aplikasi?");
         builder.setCancelable(true);
+        //memunculkan tombol aksi batal
         builder.setNegativeButton(getString(R.string.batal), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
+        //memunculkan tombol aksi keluar
         builder.setPositiveButton(getString(R.string.keluar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
